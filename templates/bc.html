@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        .highlight {
+            font-weight: bold;
+            color: yellow;
+        }
+        .video-container, .capture-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
+        video, canvas {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            border: 2px solid black;
+            margin-bottom: 10px;
+        }
+        video {
+            display: none; /* Hide video initially */
+        }
+        canvas {
+            display: none;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .capture-button, .upload-button, .retake-button, .verify-button {
+            padding: 10px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .capture-button { background-color: blue; }
+        .upload-button { background-color: green; }
+        .verify-button { background-color: orange; }
+        .retake-button { background-color: red; }
+        .capture-button:hover { background-color: darkblue; }
+        .upload-button:hover { background-color: darkgreen; }
+        .verify-button:hover { background-color: darkorange; }
+        .retake-button:hover { background-color: darkred; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Face Recognition App</h1>
+
+        <h2>Live Camera</h2>
+        <div class="video-container">
+            <video id="camera" autoplay></video>
+        </div>
+
+        <h2>Upload an Image</h2>
+        <form id="uploadForm" class="form">
+            <input type="file" name="image" required>
+            <button type="submit" class="upload-button">Upload</button>
+            <button type="button" class="capture-button" onclick="captureImage('upload')">Capture</button>
+        </form>
+        <canvas id="uploadCanvas"></canvas>
+        <button type="button" class="retake-button" onclick="retakeImage('upload')" style="display: none;">Retake</button>
+
+        <h2>Verify an Image</h2>
+        <form id="verifyForm" class="form">
+            <input type="file" name="image" required>
+            <button type="submit" class="verify-button">Verify</button>
+            <button type="button" class="capture-button" onclick="captureImage('verify')">Capture</button>
+        </form>
+        <canvas id="verifyCanvas"></canvas>
+        <button type="button" class="retake-button" onclick="retakeImage('verify')" style="display: none;">Retake</button>
+    </div>
+
+    <script>
+        let video = document.getElementById('camera');
+        let uploadCanvas = document.getElementById('uploadCanvas');
+        let verifyCanvas = document.getElementById('verifyCanvas');
+        let uploadContext = uploadCanvas.getContext('2d');
+        let verifyContext = verifyCanvas.getContext('2d');
+        let stream = null;
+
+        function captureImage(type) {
+            // Request camera access only when Capture is clicked
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(camStream => {
+                    stream = camStream;
+                    video.srcObject = stream;
+                    video.style.display = "block"; // Show video only when capturing
+                    video.play();
+
+                    setTimeout(() => {
+                        let canvas = type === 'upload' ? uploadCanvas : verifyCanvas;
+                        let context = type === 'upload' ? uploadContext : verifyContext;
+                        let retakeButton = type === 'upload' ? document.querySelectorAll('.retake-button')[0] : document.querySelectorAll('.retake-button')[1];
+
+                        canvas.style.display = "block";
+                        retakeButton.style.display = "inline-block";
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                        // Stop camera after capturing
+                        stopCamera();
+                    }, 1000); // Wait for camera to adjust before capturing
+                })
+                .catch(error => console.error("Error accessing camera:", error));
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+                video.style.display = "none"; // Hide video after capture
+            }
+        }
+
+        function retakeImage(type) {
+            let canvas = type === 'upload' ? uploadCanvas : verifyCanvas;
+            let context = type === 'upload' ? uploadContext : verifyContext;
+            let retakeButton = type === 'upload' ? document.querySelectorAll('.retake-button')[0] : document.querySelectorAll('.retake-button')[1];
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.display = "none";
+            retakeButton.style.display = "none";
+        }
+    </script>
+</body>
+</html>

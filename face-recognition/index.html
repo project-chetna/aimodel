@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="title">
+            <img src="./face-id.png" alt="Face Recognition Icon">
+            <h1>Face Recognition</h1>
+        </div>
+
+        <div class="upload-image">
+            <div class="reference">
+                <h2>Upload Reference Image</h2>
+                <form id="uploadForm" class="form">
+                    <div class="upload-options">
+                        <input class="file-uploader" type="file" id="referenceImage" name="image" accept="image/*">
+                        <button type="button" class="camera-button" onclick="toggleCamera('reference')">
+                            <img src="./camera.png" alt="Camera">
+                        </button>
+                    </div>
+                    <div class="camera-container" id="referenceCameraContainer">
+                        <video id="referenceVideo" autoplay playsinline></video>
+                        <button type="button" class="capture-button"
+                            onclick="captureImage('reference')">Capture</button>
+                        <button type="button" class="close-camera" onclick="closeCamera('reference')">✕</button>
+                    </div>
+                    <div class="image-preview">
+                        <img id="referencePreview" src="" alt="Reference preview">
+                        <button type="button" class="remove-image" onclick="removeImage('reference')">✕</button>
+                    </div>
+                    <button type="submit" class="rounded-button">Upload Image</button>
+                </form>
+            </div>
+
+            <div class="verify-face">
+                <h2>Verify Face</h2>
+                <form id="verifyForm" class="form">
+                    <div class="upload-options">
+                        <input class="file-uploader" type="file" id="verifyImage" name="image" accept="image/*">
+                        <button type="button" class="camera-button" onclick="toggleCamera('verify')">
+                            <img src="./camera.png" alt="Camera">
+                        </button>
+                    </div>
+                    <div class="camera-container" id="verifyCameraContainer">
+                        <video id="verifyVideo" autoplay playsinline></video>
+                        <button type="button" class="capture-button" onclick="captureImage('verify')">Capture</button>
+                        <button type="button" class="close-camera" onclick="closeCamera('verify')">✕</button>
+                    </div>
+                    <div class="image-preview">
+                        <img id="verifyPreview" src="" alt="Verify preview">
+                        <button type="button" class="remove-image" onclick="removeImage('verify')">✕</button>
+                    </div>
+                    <button type="submit" class="rounded-button">Verify Face</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Status Message Block -->
+        <div id="statusMessage" class="status-message" style="display: none;"></div>
+
+        <div class="result">
+            <h2>Results</h2>
+            <div id="matchedImageContainer" class="result-container">
+                <p id="noMatchMessage" style="display: none;">No match found in our database.</p>
+                <img id="matchedImage" src="" alt="Matched Face" style="display: none;">
+                <p id="similarityScore" style="display: none;">Similarity: </p>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+    <script src="./captureImage.js"></script>
+</body>
+
+</html>

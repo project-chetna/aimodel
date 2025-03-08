@@ -1,0 +1,422 @@
+/* Style for the body */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #9422bc, #1d0327);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Centering the container */
+.container {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 20px;
+    max-width: 80%;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(18, 1, 25, 0.3);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Title and headings */
+h1,
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #580974;
+    position: relative;
+}
+
+h1 {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, #9422bc, #580974);
+    border-radius: 2px;
+}
+
+/* Form elements */
+.form {
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title img {
+    width: 50px;
+    height: 50px;
+    margin-right: 0.5rem;
+}
+
+.file-uploader::-webkit-file-upload-button {
+    outline: none;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    background: #580974;
+    color: #fff;
+    border-radius: 5px;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.file-uploader {
+    width: 80%;
+    padding: 1rem;
+    margin: 0.8rem 0;
+    background: #f8f9fa;
+    border: 2px dashed #9422bc;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #580974;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* input[type="file"]:hover {
+    background: #f0f2f5;
+    border-color: #580974;
+} */
+
+.upload-image {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    overflow: hidden;
+}
+
+/* Rounded buttons */
+.rounded-button {
+    background: linear-gradient(135deg, #9422bc, #580974);
+    border: none;
+    border-radius: 12px;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(148, 34, 188, 0.3);
+}
+
+.rounded-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(148, 34, 188, 0.4);
+    background: linear-gradient(135deg, #580974, #1d0327);
+}
+
+.rounded-button:active {
+    transform: translateY(0);
+}
+
+/* Result container */
+.result-container {
+    margin-top: 1.5rem;
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(148, 34, 188, 0.2);
+    box-shadow: 0 4px 12px rgba(18, 1, 25, 0.05);
+}
+
+#matchedImage {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(18, 1, 25, 0.1);
+}
+
+/* Similarity score */
+#similarityScore {
+    font-size: 1.1rem;
+    color: #580974;
+    margin-top: 1rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background: rgba(148, 34, 188, 0.1);
+    border-radius: 8px;
+}
+
+/* Status message */
+.status-message {
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 10px;
+    background: rgba(148, 34, 188, 0.1);
+    color: #580974;
+    font-weight: 500;
+}
+
+/* Image preview */
+.image-preview {
+    margin: 1rem 0;
+    margin-left: 2rem;
+    max-width: 86%;
+    min-height: 200px;
+    display: none;
+    /* Hide by default */
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: 2px dashed #9422bc;
+    background: #f8f9fa;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.image-preview.active {
+    display: flex;
+}
+
+.image-preview img {
+    display: none;
+    /* Hide image by default */
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(18, 1, 25, 0.1);
+}
+
+.image-preview.active img {
+    display: block;
+    /* Show image when container is active */
+}
+
+/* Form elements */
+.form {
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.upload-options {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.camera-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #580974;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.camera-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.camera-button:hover {
+    background: #9422bc;
+}
+
+.camera-container {
+    display: none;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.camera-container.active {
+    display: block;
+}
+
+.camera-container video {
+    width: 100%;
+    border-radius: 12px;
+    background: #f8f9fa;
+}
+
+.capture-button {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: black;
+    padding: 0.4rem 0.8rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.capture-button:hover {
+    background: #9422bc;
+    color: white;
+}
+
+.close-camera {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.image-preview {
+    position: relative;
+    /* Added to position the remove button */
+    margin: 1rem 0;
+    margin-left: 2rem;
+    max-width: 86%;
+    min-height: 200px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    border: 2px dashed #9422bc;
+    background: #f8f9fa;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.remove-image {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(88, 9, 116, 0.9);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.remove-image:hover {
+    background: #9422bc;
+}
+
+/* Responsive design */
+@media only screen and (max-width: 900px) {
+    .container {
+        max-width: 95%;
+        padding: 2rem;
+    }
+
+    .upload-image {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    input[type="file"] {
+        width: 92%;
+        padding: 0.8rem;
+    }
+
+    .image-preview {
+        min-height: 150px;
+    }
+
+    .image-preview img {
+        max-height: 150px;
+    }
+
+    .upload-options {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .camera-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .camera-container {
+        max-width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    input[type="file"] {
+        width: 88%;
+        padding: 0.8rem;
+    }
+
+    .rounded-button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+        width: 100%;
+    }
+
+    .form {
+        margin-bottom: 1.5rem;
+    }
+
+    .result-container {
+        padding: 1rem;
+    }
+}
